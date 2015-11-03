@@ -32,6 +32,14 @@ public class StandardState : IPlayerState {
 			rigidbody.velocity -= new Vector3(0, 0.2f ,0);
 //			rigidbody.velocity = new Vector3(rigidbody.velocity.x, Mathf.Clamp(rigidbody.velocity.y,
 		}
+
+		if(player.GroundedCheck())
+		{
+			if(player.jump)
+			{
+				rigidbody.velocity += new Vector3(0, 10, 0);
+			}
+		}
     }
 
 	public void ToStandardState()

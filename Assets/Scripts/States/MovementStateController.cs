@@ -6,6 +6,7 @@ public class MovementStateController : MonoBehaviour {
 
 	[HideInInspector]public Vector3 inputDir;
 	[HideInInspector]public bool stateChange;
+	[HideInInspector] public bool jump;
 	Player player;
 
 //	public maxGravity
@@ -35,6 +36,7 @@ public class MovementStateController : MonoBehaviour {
 		inputDir.x = player.GetAxis("Move Horizontal");
 		inputDir.z = player.GetAxis("Move Vertical");
 		stateChange = player.GetButtonDown("Change State");
+		jump = player.GetButtonDown("Jump");
 
 		currentState.UpdateState(inputDir); 
 	}
