@@ -9,7 +9,12 @@ public class MovementStateController : MonoBehaviour {
 	[HideInInspector] public bool jump;
 	Player player;
 
-//	public maxGravity
+	[Header("Standard State")]
+	public float standardAccel = 5;
+	public float standardDrag = 2;
+	public float standardMovementMax = 10;
+
+	[Space(10)]
 	public float raycastDist = 1;
 
 
@@ -54,5 +59,10 @@ public class MovementStateController : MonoBehaviour {
 	public bool GroundedCheck()
 	{
 		return Physics.Raycast(transform.position, -Vector3.up,raycastDist);
+	}
+
+	public bool JumpCheck()
+	{
+		return Physics.Raycast(transform.position, -Vector3.up,raycastDist + 0.2f);
 	}
 }

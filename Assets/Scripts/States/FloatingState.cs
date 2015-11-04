@@ -26,6 +26,7 @@ public class FloatingState : IPlayerState {
 		if(!player.GroundedCheck())
 		{
 			rigidbody.velocity = new Vector3(0, Mathf.Clamp(rigidbody.velocity.y, -0.5f, 0.5f) ,0);
+			rigidbody.velocity -= new Vector3(0, 0.01f ,0);
 			//			rigidbody.velocity = new Vector3(rigidbody.velocity.x, Mathf.Clamp(rigidbody.velocity.y,
 		}
     }
