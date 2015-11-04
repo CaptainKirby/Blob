@@ -206,8 +206,8 @@ MonoBehaviour:
   inputDir: {x: 0, y: 0, z: 0}
   stateChange: 0
   jump: 0
-  standardAccel: 5
-  standardDrag: 2
+  standardAccel: 60
+  standardDrag: 8
   standardMovementMax: 10
   raycastDist: 1
 --- !u!23 &276202671
