@@ -29,6 +29,10 @@ public class RockState : IPlayerState {
 		}
 	}
 
+	public void LateUpdateState()
+	{
+
+	}
 	public void ToStandardState()
 	{
 		player.currentState = player.standardState;

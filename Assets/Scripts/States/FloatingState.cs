@@ -30,7 +30,10 @@ public class FloatingState : IPlayerState {
 			//			rigidbody.velocity = new Vector3(rigidbody.velocity.x, Mathf.Clamp(rigidbody.velocity.y,
 		}
     }
-
+	public void LateUpdateState()
+	{
+		
+	}
 	public void ToStandardState()
 	{
 		Debug.Log ("Wrong State Change");

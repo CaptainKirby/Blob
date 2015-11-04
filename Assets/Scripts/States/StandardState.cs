@@ -12,6 +12,8 @@ public class StandardState : IPlayerState {
 
 	private float speed = 0;
 	private Vector3 speedV;
+	private float jumpXVel;
+	
 	public StandardState(MovementStateController stateController, Rigidbody rigidComp)
     {
 		player = stateController;
@@ -36,10 +38,10 @@ public class StandardState : IPlayerState {
 	{
 		if(player.JumpCheck())
 		{
-			rigidbody.velocity += new Vector3(0, 10, 0);
+			jumpXVel = speedV.x/3;
+			rigidbody.velocity += new Vector3(0, 10, 0); //speedV.x*10
 		}
 	}
-
 
 	public void FixedUpdateState(Vector3 inputDir) 
 	{
@@ -48,6 +50,10 @@ public class StandardState : IPlayerState {
 			rigidbody.velocity -= new Vector3(0, 0.2f ,0);
 //			rigidbody.velocity = new Vector3(rigidbody.velocity.x, Mathf.Clamp(rigidbody.velocity.y,
 		}
+//		else
+//		{
+//			jumpXVel = 0;
+//		}
 
 		speed = speed + player.standardAccel * player.inputDir.magnitude *  Time.deltaTime;
 		speed = Mathf.Clamp(speed, 0f, player.standardMovementMax);
@@ -56,11 +62,21 @@ public class StandardState : IPlayerState {
 		speedV = new Vector3(speedV.x + player.standardAccel  * inputDir.x * Time.deltaTime, 0,speedV.z + player.standardAccel * inputDir.z * Time.deltaTime);
 		speedV = speedV - speedV * Mathf.Clamp01(player.standardDrag * Time.deltaTime);
 
-
-		rigidbody.velocity = new Vector3(speedV.x, rigidbody.velocity.y, speedV.z);
+//		if(player.GroundedCheck())
+//		{
+			rigidbody.velocity = new Vector3(speedV.x + jumpXVel, rigidbody.velocity.y, 0);
+//		}
+//		else
+//		{
+//			rigidbody.velocity = new Vector3(rigidbody.velocity.x * speedV.x/10, rigidbody.velocity.y, 0);
+//		}
 
     }
 
+	public void LateUpdateState()
+	{
+
+	}
 	public void ToStandardState()
 	{
 

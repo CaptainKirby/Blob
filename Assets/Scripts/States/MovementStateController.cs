@@ -51,6 +51,10 @@ public class MovementStateController : MonoBehaviour {
 		currentState.FixedUpdateState(inputDir);
 	}
 
+	void LateUpdate()
+	{
+		currentState.LateUpdateState();
+	}
 	void OnTriggerEnter(Collider col)
 	{
 		currentState.OnTriggerEnter(col);

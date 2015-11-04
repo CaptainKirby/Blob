@@ -8,6 +8,8 @@ public interface IPlayerState
 
 	void FixedUpdateState(Vector3 inputDir);
 
+	void LateUpdateState();
+
 	void ToStandardState();
 
 	void ToFloatingState();
