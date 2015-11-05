@@ -4,6 +4,8 @@ using System.Collections;
 
 public interface IPlayerState
 {
+	void StartState();
+
 	void UpdateState(Vector3 inputDir);
 
 	void FixedUpdateState(Vector3 inputDir);

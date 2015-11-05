@@ -20,6 +20,10 @@ public class StandardState : IPlayerState {
 		rigidbody = rigidComp;
 	}
 
+	public void StartState()
+	{
+		rigidbody.velocity = Vector3.zero;
+	}
 
 	public void UpdateState(Vector3 inputDir)
 	{
@@ -32,14 +36,24 @@ public class StandardState : IPlayerState {
 		{
 			JumpInit ();
 		}
+//		else
+//		{
+//			if(player.GroundedCheck())
+//			{
+//				jumpXVel = 0;
+//			}
+//		}
+//		Debug.Log(jumpXVel + " " + player.GroundedCheck());
+//		Debug.Log(player.SideCheckRight() + " " + player.SideCheckLeft());
+
 	}
 
 	private void JumpInit()
 	{
 		if(player.JumpCheck())
 		{
-			jumpXVel = speedV.x/3;
-			rigidbody.velocity += new Vector3(0, 10, 0); //speedV.x*10
+//			jumpXVel = player.inputDir.normalized.x *2;
+			rigidbody.velocity += new Vector3(0, player.standardJumpVelocity, 0); //speedV.x*10
 		}
 	}
 
@@ -47,7 +61,7 @@ public class StandardState : IPlayerState {
 	{
 		if(!player.GroundedCheck())
 		{
-			rigidbody.velocity -= new Vector3(0, 0.2f ,0);
+			rigidbody.velocity -= new Vector3(0, player.standardGravity ,0);
 //			rigidbody.velocity = new Vector3(rigidbody.velocity.x, Mathf.Clamp(rigidbody.velocity.y,
 		}
 //		else
@@ -55,16 +69,28 @@ public class StandardState : IPlayerState {
 //			jumpXVel = 0;
 //		}
 
+		Debug.Log(player.GroundedCheck());
 		speed = speed + player.standardAccel * player.inputDir.magnitude *  Time.deltaTime;
 		speed = Mathf.Clamp(speed, 0f, player.standardMovementMax);
 		speed = speed - speed * Mathf.Clamp01(player.standardDrag * Time.deltaTime);
 
-		speedV = new Vector3(speedV.x + player.standardAccel  * inputDir.x * Time.deltaTime, 0,speedV.z + player.standardAccel * inputDir.z * Time.deltaTime);
+		speedV = new Vector3(speedV.x + player.standardAccel  * player.inputDir.x * Time.deltaTime, 0, 0); //speedV.z + player.standardAccel * player.inputDir.z * Time.deltaTime
 		speedV = speedV - speedV * Mathf.Clamp01(player.standardDrag * Time.deltaTime);
-
+		speedV = new Vector3(Mathf.Clamp(speedV.x, -player.standardMovementMax, player.standardMovementMax),speedV.y, 0);
+		if((player.SideCheckLeft() || player.SideCheckRight()) && !player.GroundedCheck())
+		{
+			speedV = Vector3.zero;
+		}
 //		if(player.GroundedCheck())
 //		{
+//		if(!player.SideCheckLeft() && !player.SideCheckRight())
+//		{
 			rigidbody.velocity = new Vector3(speedV.x + jumpXVel, rigidbody.velocity.y, 0);
+//		}
+//		else if(player.GroundedCheck())
+//		{
+//			rigidbody.velocity = new Vector3(speedV.x + jumpXVel, rigidbody.velocity.y, 0);
+//		}
 //		}
 //		else
 //		{
@@ -85,6 +111,7 @@ public class StandardState : IPlayerState {
 	public void ToFloatingState()
 	{
 		player.currentState = player.floatingState;
+		player.currentState.StartState();
 		jump = false;
 		Debug.Log ("To float state");
 	}

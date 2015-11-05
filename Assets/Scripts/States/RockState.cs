@@ -12,6 +12,11 @@ public class RockState : IPlayerState {
 		rigidbody = rigidComp;
 	}
 
+	public void StartState()
+	{
+		rigidbody.velocity = new Vector3(0,0,0);
+	}
+
 	public void UpdateState(Vector3 inputDir)
 	{
 		if(player.stateChange)
@@ -24,7 +29,7 @@ public class RockState : IPlayerState {
 	{
 		if(!player.GroundedCheck())
 		{
-			rigidbody.velocity -= new Vector3(0, 0.8f ,0);
+			rigidbody.velocity -= new Vector3(0, player.rockGravity ,0);
 			//			rigidbody.velocity = new Vector3(rigidbody.velocity.x, Mathf.Clamp(rigidbody.velocity.y,
 		}
 	}
@@ -36,6 +41,7 @@ public class RockState : IPlayerState {
 	public void ToStandardState()
 	{
 		player.currentState = player.standardState;
+		player.currentState.StartState();
 		Debug.Log ("To standard state");
 	}
 
