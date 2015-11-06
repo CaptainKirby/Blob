@@ -12,9 +12,9 @@ public class RockState : IPlayerState {
 		rigidbody = rigidComp;
 	}
 
-	public void StartState()
+	public void StartState(Vector3 vel)
 	{
-		rigidbody.velocity = new Vector3(0,0,0);
+		rigidbody.velocity = Vector3.zero;
 	}
 
 	public void UpdateState(Vector3 inputDir)
@@ -41,7 +41,7 @@ public class RockState : IPlayerState {
 	public void ToStandardState()
 	{
 		player.currentState = player.standardState;
-		player.currentState.StartState();
+		player.currentState.StartState(rigidbody.velocity);
 		Debug.Log ("To standard state");
 	}
 

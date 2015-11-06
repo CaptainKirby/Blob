@@ -20,7 +20,7 @@ public class StandardState : IPlayerState {
 		rigidbody = rigidComp;
 	}
 
-	public void StartState()
+	public void StartState(Vector3 vel)
 	{
 		rigidbody.velocity = Vector3.zero;
 	}
@@ -85,7 +85,18 @@ public class StandardState : IPlayerState {
 //		{
 //		if(!player.SideCheckLeft() && !player.SideCheckRight())
 //		{
+		if(player.inputDir.magnitude > 0.1f)
+		{
 			rigidbody.velocity = new Vector3(speedV.x + jumpXVel, rigidbody.velocity.y, 0);
+		}
+		else if(!player.GroundedCheck() && player.inputDir.magnitude < 0.2f)
+		{
+			rigidbody.velocity = new Vector3(rigidbody.velocity.x * 0.99f, rigidbody.velocity.y, 0);
+		}
+		else if(player.GroundedCheck())
+		{
+			rigidbody.velocity = new Vector3(speedV.x + jumpXVel, rigidbody.velocity.y, 0);
+		}
 //		}
 //		else if(player.GroundedCheck())
 //		{
@@ -111,7 +122,7 @@ public class StandardState : IPlayerState {
 	public void ToFloatingState()
 	{
 		player.currentState = player.floatingState;
-		player.currentState.StartState();
+		player.currentState.StartState(rigidbody.velocity); 
 		jump = false;
 		Debug.Log ("To float state");
 	}

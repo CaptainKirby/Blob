@@ -359,9 +359,9 @@ MonoBehaviour:
   standardJumpVelocity: 12
   floatingAccel: 15
   floatingDrag: .5
-  floatingMovementMax: 4
+  floatingMovementMax: 3
   floatingGravity: .300000012
-  rockGravity: 1.20000005
+  rockGravity: 3
   raycastDist: .522698998
 --- !u!23 &276202671
 MeshRenderer:

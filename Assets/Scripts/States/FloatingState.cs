@@ -14,9 +14,11 @@ public class FloatingState : IPlayerState {
 		rigidbody = rigidComp;
 	}
 
-	public void StartState()
+	public void StartState(Vector3 vel)
 	{
 //		rigidbody.velocity = rigidbody.velocity/2;
+//		StartCoroutine(
+//		player.StartCoroutine(EntryVelocity(vel));
 //		Debug.Log (rigidbody.velocity);
 	}
 
@@ -35,7 +37,7 @@ public class FloatingState : IPlayerState {
 		speedV = new Vector3(Mathf.Clamp(speedV.x, -player.floatingMovementMax, player.floatingMovementMax),Mathf.Clamp(speedV.y, -player.floatingMovementMax, player.floatingMovementMax), 0);
 //		Debug.Log (speedV);
 
-//		if(speedV.magnitude > 0.1f)
+//		if(player > 0.1f)
 //		{
 			rigidbody.velocity = new Vector3(speedV.x, speedV.y , 0); // keep starting velocity HOW
 //		}
@@ -74,7 +76,7 @@ public class FloatingState : IPlayerState {
 	public void ToRockState()
 	{
 		player.currentState = player.rockState;		
-		player.currentState.StartState();
+		player.currentState.StartState(rigidbody.velocity);
 		Debug.Log ("To rock state");
 	}
 
@@ -82,6 +84,28 @@ public class FloatingState : IPlayerState {
 	{
 
 	}
+
+//	private IEnumerator EntryVelocity(Vector3 vel)
+//	{
+//		bool onOff = true;
+//		float mTime = 0;
+//		Vector3 velTemp = vel;
+//		while(onOff)
+//		{
+//			if(mTime < 1)
+//			{
+//				velTemp  = velTemp*0.99f;
+//				rigidbody.velocity = new Vector3(rigidbody.velocity.x + velTemp.x, rigidbody.velocity.y+ velTemp.y, 0);
+//			}
+//			else
+//			{
+//				onOff = false;
+//				yield break;
+//			}
+//			yield return null;
+//		}
+//
+//	}
 
 
 }
