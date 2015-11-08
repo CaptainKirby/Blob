@@ -43,6 +43,7 @@ public class MovementStateController : MonoBehaviour {
 
 	public void Start()
 	{
+
 		currentState = standardState;
 		player = ReInput.players.GetPlayer(0);
 	}
