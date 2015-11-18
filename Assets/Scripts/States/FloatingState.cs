@@ -7,7 +7,7 @@ public class FloatingState : IPlayerState {
 
 	private Rigidbody rigidbody;
 	private Vector3 speedV;
-
+    private float startHeight;
 	public FloatingState(MovementStateController stateController, Rigidbody rigidComp)
 	{
 		player = stateController;
@@ -16,17 +16,21 @@ public class FloatingState : IPlayerState {
 
 	public void StartState(Vector3 vel)
 	{
-//		rigidbody.velocity = rigidbody.velocity/2;
-//		StartCoroutine(
-//		player.StartCoroutine(EntryVelocity(vel));
-//		Debug.Log (rigidbody.velocity);
+        //		rigidbody.velocity = rigidbody.velocity/2;
+        //		StartCoroutine(
+        //		player.StartCoroutine(EntryVelocity(vel));
+        //		Debug.Log (rigidbody.velocity);
+        speedV = rigidbody.velocity;
+        startHeight = player.transform.position.y;
+        Debug.Log(startHeight);
 	}
 
 	public void UpdateState(Vector3 inputDir)
 	{
 		if(player.stateChange)
 		{
-			ToRockState();
+            //ToRockState();
+            ChangeState(player.rockState);
 		}
 	}
 
@@ -52,6 +56,12 @@ public class FloatingState : IPlayerState {
 			//			rigidbody.velocity = new Vector3(rigidbody.velocity.x, Mathf.Clamp(rigidbody.velocity.y,
 		}
 
+        //if(player.transform.position.y > startHeight + player.floatExtraHeight)
+        //{
+        //    rigidbody.velocity = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y * 0.9f, 0);
+
+        //}
+
 //		rigidbody.velocity = new Vector3(Mathf.Clamp(rigidbody.velocity.x, -player.floatingMovementMax, player.floatingMovementMax), Mathf.Clamp(rigidbody.velocity.y, -player.floatingMovementMax, player.floatingMovementMax), 0);
 
 //		if(rigidbody.velocity.magnitude < 0.3f)
@@ -63,22 +73,12 @@ public class FloatingState : IPlayerState {
 	{
 		
 	}
-	public void ToStandardState()
-	{
-		Debug.Log ("Wrong State Change");
-	}
+    public void ChangeState(IPlayerState state)
+    {
+        player.currentState = state;
+        player.currentState.StartState(rigidbody.velocity);
+    }
 
-	public void ToFloatingState()
-	{
-		Debug.Log ("Wrong State Change");
-	}
-
-	public void ToRockState()
-	{
-		player.currentState = player.rockState;		
-		player.currentState.StartState(rigidbody.velocity);
-		Debug.Log ("To rock state");
-	}
 
 	public void OnTriggerEnter(Collider col)
 	{

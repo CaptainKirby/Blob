@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class RockState : IPlayerState {
 
@@ -21,7 +22,8 @@ public class RockState : IPlayerState {
 	{
 		if(player.stateChange)
 		{
-			ToStandardState();
+            //ToStandardState();
+            ChangeState(player.standardState);
 		}
 	}
 	 
@@ -38,27 +40,19 @@ public class RockState : IPlayerState {
 	{
 
 	}
-	public void ToStandardState()
-	{
-		player.currentState = player.standardState;
-		player.currentState.StartState(rigidbody.velocity);
-		Debug.Log ("To standard state");
-	}
 
-	public void ToFloatingState()
-	{
+    public void ChangeState(IPlayerState state)
+    {
+        player.currentState = state;
+        player.currentState.StartState(rigidbody.velocity);
+    }
 
-	}
 
-	public void ToRockState()
-	{
-
-	}
 
 	public void OnTriggerEnter(Collider col)
 	{
 		
 	}
 
-
+   
 }

@@ -12,11 +12,7 @@ public interface IPlayerState
 
 	void LateUpdateState();
 
-	void ToStandardState();
-
-	void ToFloatingState();
-
-	void ToRockState();
+    void ChangeState(IPlayerState state);
 
 	void OnTriggerEnter(Collider col); 
 	

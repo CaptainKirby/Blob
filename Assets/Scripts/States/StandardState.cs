@@ -23,6 +23,7 @@ public class StandardState : IPlayerState {
 	public void StartState(Vector3 vel)
 	{
 		rigidbody.velocity = Vector3.zero;
+        speedV = Vector3.zero;
 	}
 
 	public void UpdateState(Vector3 inputDir)
@@ -30,7 +31,8 @@ public class StandardState : IPlayerState {
 
 		if(player.stateChange)
 		{
-			ToFloatingState();
+            //ToFloatingState();
+            ChangeState(player.floatingState);
 		}
 		if(player.jump)
 		{
@@ -81,6 +83,7 @@ public class StandardState : IPlayerState {
 		{
 			speedV = Vector3.zero;
 		}
+        
 //		if(player.GroundedCheck())
 //		{
 //		if(!player.SideCheckLeft() && !player.SideCheckRight())
@@ -114,23 +117,12 @@ public class StandardState : IPlayerState {
 	{
 
 	}
-	public void ToStandardState()
-	{
+    public void ChangeState(IPlayerState state)
+    {
+        player.currentState = state;
+        player.currentState.StartState(rigidbody.velocity);
+    }
 
-	}
-
-	public void ToFloatingState()
-	{
-		player.currentState = player.floatingState;
-		player.currentState.StartState(rigidbody.velocity); 
-		jump = false;
-		Debug.Log ("To float state");
-	}
-
-	public void ToRockState()
-	{
-
-	}
 
 	public void OnTriggerEnter(Collider col)
 	{

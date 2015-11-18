@@ -21,6 +21,7 @@ public class MovementStateController : MonoBehaviour {
 	public float floatingDrag = 2;
 	public float floatingMovementMax = 10;
 	public float floatingGravity = 0.1f;
+    public float floatExtraHeight = 10;
 
 	[Header("Rock State")]
 	public float rockGravity = 1;
@@ -55,7 +56,8 @@ public class MovementStateController : MonoBehaviour {
 		stateChange = player.GetButtonDown("Change State");
 		jump = player.GetButtonDown("Jump");
 
-		currentState.UpdateState(inputDir); 
+		currentState.UpdateState(inputDir);
+        //Debug.Log(GetComponent<Rigidbody>().velocity);
 	}
 
 	void FixedUpdate()
@@ -72,6 +74,7 @@ public class MovementStateController : MonoBehaviour {
 		currentState.OnTriggerEnter(col);
 	}
 
+    
 	public bool GroundedCheck()
 	{
 //		return Physics.Raycast(transform.position, -Vector3.up,raycastDist);
