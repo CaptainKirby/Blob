@@ -71,7 +71,7 @@ public class StandardState : IPlayerState {
 //			jumpXVel = 0;
 //		}
 
-		Debug.Log(player.GroundedCheck());
+		//Debug.Log(player.GroundedCheck());
 		speed = speed + player.standardAccel * player.inputDir.magnitude *  Time.deltaTime;
 		speed = Mathf.Clamp(speed, 0f, player.standardMovementMax);
 		speed = speed - speed * Mathf.Clamp01(player.standardDrag * Time.deltaTime);
@@ -127,6 +127,10 @@ public class StandardState : IPlayerState {
 	public void OnTriggerEnter(Collider col)
 	{
         
+    }
+    public void OnCollisionEnter(Collision col)
+    {
+
     }
 
 

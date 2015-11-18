@@ -20,9 +20,9 @@ public class FloatingState : IPlayerState {
         //		StartCoroutine(
         //		player.StartCoroutine(EntryVelocity(vel));
         //		Debug.Log (rigidbody.velocity);
-        speedV = rigidbody.velocity;
+        speedV = rigidbody.velocity *0.5f;
         startHeight = player.transform.position.y;
-        Debug.Log(startHeight);
+        //Debug.Log(startHeight);
 	}
 
 	public void UpdateState(Vector3 inputDir)
@@ -85,27 +85,11 @@ public class FloatingState : IPlayerState {
 
 	}
 
-//	private IEnumerator EntryVelocity(Vector3 vel)
-//	{
-//		bool onOff = true;
-//		float mTime = 0;
-//		Vector3 velTemp = vel;
-//		while(onOff)
-//		{
-//			if(mTime < 1)
-//			{
-//				velTemp  = velTemp*0.99f;
-//				rigidbody.velocity = new Vector3(rigidbody.velocity.x + velTemp.x, rigidbody.velocity.y+ velTemp.y, 0);
-//			}
-//			else
-//			{
-//				onOff = false;
-//				yield break;
-//			}
-//			yield return null;
-//		}
-//
-//	}
+    public void OnCollisionEnter(Collision col)
+    {
+
+    }
+
 
 
 }

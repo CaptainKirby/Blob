@@ -74,6 +74,11 @@ public class MovementStateController : MonoBehaviour {
 		currentState.OnTriggerEnter(col);
 	}
 
+    void OnCollisionEnter(Collision col)
+    {
+        currentState.OnCollisionEnter(col);
+    }
+
     
 	public bool GroundedCheck()
 	{

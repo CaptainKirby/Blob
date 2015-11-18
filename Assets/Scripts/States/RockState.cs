@@ -51,8 +51,19 @@ public class RockState : IPlayerState {
 
 	public void OnTriggerEnter(Collider col)
 	{
-		
-	}
+        if (col.CompareTag("RockBreak"))
+        {
+            Debug.Log("BREAKBLOCKTRIGGER");
+        }
+    }
+    public void OnCollisionEnter(Collision col)
+    {
+        if (col.collider.CompareTag("RockBreak"))
+        {
+            Debug.Log("BREAKBLOCKCOLLISION");
+            col.collider.gameObject.SetActive(false);
+        }
+    }
 
-   
+
 }

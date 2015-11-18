@@ -14,7 +14,9 @@ public interface IPlayerState
 
     void ChangeState(IPlayerState state);
 
-	void OnTriggerEnter(Collider col); 
-	
+	void OnTriggerEnter(Collider col);
+
+    void OnCollisionEnter(Collision col); 
+
 }
 
