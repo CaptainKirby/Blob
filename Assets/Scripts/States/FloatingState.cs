@@ -8,6 +8,7 @@ public class FloatingState : IPlayerState {
 	private Rigidbody rigidbody;
 	private Vector3 speedV;
     private float startHeight;
+    private float floatingGravity;
 	public FloatingState(MovementStateController stateController, Rigidbody rigidComp)
 	{
 		player = stateController;
@@ -20,8 +21,9 @@ public class FloatingState : IPlayerState {
         //		StartCoroutine(
         //		player.StartCoroutine(EntryVelocity(vel));
         //		Debug.Log (rigidbody.velocity);
-        speedV = rigidbody.velocity *0.5f;
+        speedV = rigidbody.velocity *0.4f;
         startHeight = player.transform.position.y;
+        floatingGravity = player.floatingGravity;
         //Debug.Log(startHeight);
 	}
 
@@ -32,6 +34,14 @@ public class FloatingState : IPlayerState {
             //ToRockState();
             ChangeState(player.rockState);
 		}
+        if (!player.GroundedCheck())
+        {
+            floatingGravity = floatingGravity + player.floatingGravityFallIncriment;
+        }
+        else if(player.GroundedCheck() && floatingGravity != player.floatingGravity)
+        {
+            floatingGravity = player.floatingGravity;
+        }
 	}
 
 	public void FixedUpdateState(Vector3 inputDir)
@@ -52,7 +62,7 @@ public class FloatingState : IPlayerState {
 		if(!player.GroundedCheck())
 		{
 			//			rigidbody.velocity = new Vector3(0, Mathf.Clamp(rigidbody.velocity.y, -0.5f, 0.5f) ,0);
-			rigidbody.velocity -= new Vector3(0, player.floatingGravity ,0);
+			rigidbody.velocity -= new Vector3(0, floatingGravity ,0);
 			//			rigidbody.velocity = new Vector3(rigidbody.velocity.x, Mathf.Clamp(rigidbody.velocity.y,
 		}
 

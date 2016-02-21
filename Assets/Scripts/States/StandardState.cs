@@ -61,18 +61,19 @@ public class StandardState : IPlayerState {
 
 	public void FixedUpdateState(Vector3 inputDir) 
 	{
+        //Debug.Log()
 		if(!player.GroundedCheck())
 		{
 			rigidbody.velocity -= new Vector3(0, player.standardGravity ,0);
 //			rigidbody.velocity = new Vector3(rigidbody.velocity.x, Mathf.Clamp(rigidbody.velocity.y,
 		}
-//		else
-//		{
-//			jumpXVel = 0;
-//		}
+        //		else
+        //		{
+        //			jumpXVel = 0;
+        //		}
 
-		//Debug.Log(player.GroundedCheck());
-		speed = speed + player.standardAccel * player.inputDir.magnitude *  Time.deltaTime;
+        //Debug.Log(player.GroundedCheck());
+        speed = speed + player.standardAccel * player.inputDir.magnitude *  Time.deltaTime;
 		speed = Mathf.Clamp(speed, 0f, player.standardMovementMax);
 		speed = speed - speed * Mathf.Clamp01(player.standardDrag * Time.deltaTime);
 

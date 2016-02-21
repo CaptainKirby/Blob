@@ -21,6 +21,7 @@ public class MovementStateController : MonoBehaviour {
 	public float floatingDrag = 2;
 	public float floatingMovementMax = 10;
 	public float floatingGravity = 0.1f;
+    public float floatingGravityFallIncriment = 0.25f;
     public float floatExtraHeight = 10;
 
 	[Header("Rock State")]
@@ -80,14 +81,28 @@ public class MovementStateController : MonoBehaviour {
     }
 
     
-	public bool GroundedCheck()
+	public bool GroundedCheck() // need to fix so it doesnt return false in intersections
 	{
-//		return Physics.Raycast(transform.position, -Vector3.up,raycastDist);
-		RaycastHit hit2;
-		return Physics.SphereCast(transform.position, 0.4f, -transform.up, out hit2, 0.15f);
+        //Debug.DrawRay(transform.position, new Vector3(-Vector3.up.x - 0.2f, -Vector3.up.y, 0) * raycastDist);
+        if (Physics.Raycast(transform.position, -Vector3.up, raycastDist))
+        {
+            return true;
+        }
+        else if (Physics.Raycast(transform.position, new Vector3(-Vector3.up.x - 0.1f, -Vector3.up.y, 0), raycastDist))
+        {
+            return true;
+        }
+        else if (Physics.Raycast(transform.position, new Vector3(-Vector3.up.x + 0.1f, -Vector3.up.y, 0), raycastDist))
+        {
+            return true;
+        }
+        else
+            return false;
+        //return Physics.Raycast(transform.position, -Vector3.up, raycastDist);
+        //RaycastHit hit2;
+		//return Physics.SphereCast(transform.position, 0.2f, -transform.up, out hit2, transform.localScale.y-0.2f);
 
 	}
-
 	public bool JumpCheck()
 	{
 //		return Physics.Raycast(transform.position, -Vector3.up,raycastDist + 0.2f);
