@@ -9,6 +9,7 @@ public class MovementStateController : MonoBehaviour {
 	[HideInInspector] public bool jump;
 	Player player;
 
+
 	[Header("Standard State")]
 	public float standardAccel = 5;
 	public float standardDrag = 2;
@@ -27,8 +28,11 @@ public class MovementStateController : MonoBehaviour {
 	[Header("Rock State")]
 	public float rockGravity = 1;
 
-	[Space(10)]
-	public float raycastDist = 1;
+    [Space(10)]
+    public GameObject heelLeft;
+    public GameObject heelRight;
+	public float heelRaycastDist = 1;
+    public float raycastDist = 1;
 
 
 	[HideInInspector] public IPlayerState currentState;
@@ -38,7 +42,7 @@ public class MovementStateController : MonoBehaviour {
 
 	public void Awake()
 	{
-		standardState = new StandardState(this, GetComponent<Rigidbody>());
+		standardState = new StandardState(this, GetComponent<CharacterController>());
 		floatingState = new FloatingState(this, GetComponent<Rigidbody>());
 		rockState = new RockState(this, GetComponent<Rigidbody>());
 	}
@@ -80,9 +84,9 @@ public class MovementStateController : MonoBehaviour {
         currentState.OnCollisionEnter(col);
     }
 
-    
-	public bool GroundedCheck() // need to fix so it doesnt return false in intersections
-	{
+
+    public bool GroundedCheck() // need to fix so it doesnt return false in intersections
+    {
         //Debug.DrawRay(transform.position, new Vector3(-Vector3.up.x - 0.2f, -Vector3.up.y, 0) * raycastDist);
         if (Physics.Raycast(transform.position, -Vector3.up, raycastDist))
         {
@@ -100,10 +104,30 @@ public class MovementStateController : MonoBehaviour {
             return false;
         //return Physics.Raycast(transform.position, -Vector3.up, raycastDist);
         //RaycastHit hit2;
-		//return Physics.SphereCast(transform.position, 0.2f, -transform.up, out hit2, transform.localScale.y-0.2f);
+        //return Physics.SphereCast(transform.position, 0.2f, -transform.up, out hit2, transform.localScale.y-0.2f);
 
-	}
-	public bool JumpCheck()
+    }
+
+    public bool HeelCheckL()
+    {
+        var down = transform.TransformDirection(Vector3.down);
+        bool allowFall = false;
+        // cast a ray down from our heel, if it hits anything, we shouldn't allow the capsule to fall
+        allowFall = !(Physics.Raycast(heelLeft.transform.position, down, heelRaycastDist));
+
+        return allowFall;
+    }
+
+    public bool HeelCheckR()
+    {
+        var down = transform.TransformDirection(Vector3.down);
+        bool allowFall = false;
+        // cast a ray down from our heel, if it hits anything, we shouldn't allow the capsule to fall
+        allowFall = !(Physics.Raycast(heelRight.transform.position, down, heelRaycastDist));
+
+        return allowFall;
+    }
+    public bool JumpCheck()
 	{
 //		return Physics.Raycast(transform.position, -Vector3.up,raycastDist + 0.2f);
 		RaycastHit hit;
